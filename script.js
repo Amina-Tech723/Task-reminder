@@ -1,4 +1,5 @@
 function addTask() {
+
     let input = document.querySelector(".task-input input");
     let taskText = input.value.trim();
 
@@ -7,7 +8,7 @@ function addTask() {
         return;
     }
 
-    let taskContainer = document.querySelector(".task");
+    let taskContainer = document.getElementById("taskContainer");
 
     let taskBox = document.createElement("div");
     taskBox.classList.add("task-box");
@@ -18,20 +19,29 @@ function addTask() {
         <button class="taskbtn">Delete</button>
     `;
 
-    // DELETE
-    taskBox.querySelector(".taskbtn").addEventListener("click", function () {
+    // Delete Task
+    let deleteBtn = taskBox.querySelector(".taskbtn");
+    deleteBtn.addEventListener("click", function () {
         taskBox.remove();
     });
 
-    // SINGLE CHECKBOX LOGIC
-    taskBox.querySelector(".task-check").addEventListener("change", function () {
-        if (this.checked) {
-            document.querySelectorAll(".task-check").forEach(cb => {
-                if (cb !== this) cb.checked = false;
-            });
-        }
+    
+    let checkbox = taskBox.querySelector(".task-check");
+    checkbox.addEventListener("change", function () {
+
+        let allCheckboxes = document.querySelectorAll(".task-check");
+
+        allCheckboxes.forEach(function (cb) {
+            if (cb !== checkbox) {
+                cb.checked = false;
+            }
+        });
+
     });
 
-    taskContainer.appendChild(taskBox);
+   
+    taskContainer.prepend(taskBox);
+
+    
     input.value = "";
 }
